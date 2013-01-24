@@ -1,0 +1,109 @@
+﻿@model Xktec.hqfq.Entity.LineInfo
+
+@{
+    ViewBag.Title = "创建新线路";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+<h2 class="shadow">创建新线路</h2>
+
+<script type="text/javascript" >
+
+</script>
+
+<div>
+<form action="javascript:lineSubmit('form','@Url.Action("create","line",null)');" method="post" id="form">
+    <fieldset>
+    <legend>线路基本信息</legend>
+      
+    <div class="formRow"><div class="field-label">@Html.LabelFor(c => c.Name, "线路名:")</div><div class="field-input">@Html.TextBoxFor(c => c.Name, new { emptyText = "请输入线路名，最多80字符",style="width:450px;" })<span class="red bold">*(必填)</span></div></div>
+    <div class="formRow"><div class="field-label">@Html.LabelFor(c => c.Day, "天 数:")</div><div class="field-input"><input name="Day" id="Day" value=1 type="text" style="width:50px;" /><span class="red bold">*(必填)</span></div></div>
+   <div class="formRow"> <div class="field-label">@Html.LabelFor(c => c.OutCity, "出发城市:")</div><div class="field-input">@Html.TextBoxFor(c => c.OutCity, new { style="width:100px;"})</div></div>
+   <div class="formRow"><div class="field-label">@Html.LabelFor(c => c.AdWords, "广告语:")</div><div class="field-input">@Html.TextBoxFor(c => c.AdWords, new { emptyText = "请输入线路广告语，最多140字符",style="width:680px;" })</div></div>
+   <div class="formRow"><div class="field-label">@Html.LabelFor(c => c.Category, "分 类:")</div><div class="field-input">  @Html.DropDownList("category.id", ViewBag.cate as List<SelectListItem>, new {id="Category" })<span class="red bold">*(必选)</span></div></div>
+    <div class="formRow"><div class="field-label"><label>线路配图:</label></div>
+    <div class="field-input">
+	<select name="image.id" id="image" class="egg_imagedropdown" ></select>
+           </div>
+   
+        <div> <span id="upLoadButton"></span></div>    
+</div>
+    </fieldset>
+    <fieldset>
+    <legend>行程信息</legend>
+    <table id="itin" class="table-style">
+    <thead><tr align="center"><td  style="width:60px;">日期</td><td width="70px">所经城市</td><td>详情</td><td width="50px">住宿</td><td  width="50px">用餐</td></tr></thead>
+    <tbody align=center>
+    <tr><td><input type="hidden"value="0"  name='itineraries[0].OrderNum' /> 第 <span class="red bold">1</span> 天</td><td><textarea  name="itineraries[0].title" style="height:120px; width:70px;" ></textarea></td><td><textarea name="itineraries[0].maincontent"style="height:120px; width:500px;" ></textarea></td><td><textarea name="itineraries[0].hotel" style="height:120px; width:50px;" ></textarea></td><td>早 <input type="checkbox" name="itineraries[0].HasBreakfast" value="true" /><input name="itineraries[0].HasBreakfast" type="hidden" value="false" /><br />中 <input type="checkbox" name="itineraries[0].HasLunch"  value="true"/><input name="itineraries[0].HasLunch" type="hidden" value="false" /><br />晚 <input type="checkbox" name="itineraries[0].HasDinner" value="true" /><input name="itineraries[0].HasDinner" type="hidden" value="false" /><br /></td></tr>
+    </tbody>
+    </table>
+    </fieldset>
+    <div id="otherInfo">
+    <fieldset>
+    <legend>其他信息</legend>
+    <fieldset>
+    <legend >注意事项</legend>
+    <ul id="cautions" nameText="注意事项">
+        <input type="hidden" name="cautions" value="" />
+    <li><input type="text" name="cautions" emptyText = "请在这里输入第一条注意事项", style = "width:670px; margin-left:20px;", onfocus = "lineOtherInfoOnfocus(this)", onblur = "lineOtherInfoBlur(this)" /></li>
+    </ul>
+    </fieldset>
+    <fieldset>
+    <legend >线路特色</legend>
+    <ul id="features" nameText="线路特色">
+        <input type="hidden" name="features" value="" />
+    <li><input type="text"  emptyText = "请在这里输入第一条线路特色", style = "width:670px; margin-left:20px;", onfocus = "lineOtherInfoOnfocus(this)", onblur = "lineOtherInfoBlur(this)" /></li>
+    </ul>
+    </fieldset>
+    <fieldset>
+    <legend >自费项目</legend>
+    <ul id="selffincitems"  nameText="自费项目">
+      <input type="hidden" name="selffincitems" value="" />
+    <li><input type="text" " emptyText = "请在这里输入第一条自费项目", style = "width:670px; margin-left:20px;", onfocus = "lineOtherInfoOnfocus(this)", onblur = "lineOtherInfoBlur(this)" /></li>
+    </ul>
+    </fieldset>
+       <fieldset>
+    <legend >费用包含</legend>
+    <ul id="chargeIns" nameText="费用包含">
+    <input type="hidden" name="chargeIns" value="" />
+    <li><input type="text"    emptyText = "请在这里输入第一条费用包含", style = "width:670px; margin-left:20px;", onfocus = "lineOtherInfoOnfocus(this)", onblur = "lineOtherInfoBlur(this)" /></li>
+    </ul>
+    </fieldset>
+       <fieldset>
+    <legend >费用不含</legend>
+    <ul id="chargeExs" nameText="费用不含">
+        <input type="hidden" name="chargeExs" value="" />
+    <li><input type="text"  emptyText = "请在这里输入第一条费用不含", style = "width:670px; margin-left:20px;", onfocus = "lineOtherInfoOnfocus(this)", onblur = "lineOtherInfoBlur(this)" /></li>
+    </ul>
+    </fieldset>
+    <fieldset>
+    <legend >温馨提示</legend>
+    <ul id="tips" nameText="温馨提示">
+         <input type="hidden" name="tips" value="" />
+    <li><input type="text" emptyText = "请在这里输入第一条温馨提示", style = "width:670px; margin-left:20px;", onfocus = "lineOtherInfoOnfocus(this)", onblur = "lineOtherInfoBlur(this)" /></li>
+    </ul>
+    </fieldset>
+    </fieldset> </div>
+    <input type=submit value="tijiao" />
+    </form>
+</div>
+<div id="cropWindow" class="mini-window" title="剪裁图片"  style="width:590px; height:460px;"  
+    showModal="true" allowResize="true" allowDrag="true"
+    >
+  <div class="crop"> 
+   <div id="cropzoom_container" ></div> 
+   <div class="page_btn"> 
+       <a class="mini-button" id="crop" iconCls="icon-save">剪切照片</a>
+        <a class="mini-button" id="restore" iconCls="icon-reload"> 照片复位</a>
+    
+   </div> 
+   <div class="clear"></div> 
+</div> 
+    
+</div>
+<script type="text/javascript">
+  
+
+   
+loadingImg("image", $("#Category").val(), 0); 
+var swfu = new SWFUpload(swfSetting);
+</script>

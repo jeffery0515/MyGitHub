@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.leftmenu = "line";
+    
+}
+       
+
+<div class="tabs" id="tabs">
+<ul>
+   <li id="tab1"><span>首页顶部项目</span></li>        
+   <li id="tab2"><span>首页推荐线路</span> </li>
+   <li id="tab3"><span>正常显示线路</span></li>
+   <li id="tab4"><span>已关闭线路</span></li>
+</ul>
+ </div>
+ <div class="tabs-bd"></div>
+  @RenderBody()
+
